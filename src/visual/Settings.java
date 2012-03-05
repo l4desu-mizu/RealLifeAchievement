@@ -5,9 +5,16 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 import util.Period;
 
@@ -30,8 +37,17 @@ public class Settings extends Frame {
 	private HashMap<String,Object> settings;
 	private int anzahl;
 	
-	Settings(Image icon){
+	private JSlider intervalChoose,popuptimeChoose;
+	private JTextField urlChoose;
+	private JButton positionChoose,save;
+	private JPanel back;
+	private Main owner;
+	
+	private Actions actions;
+	
+	Settings(Frame owner,Image icon){
 		super("Real Life Achievments Settings");
+		this.owner=(Main)owner;
 		this.setVisible(false);
 		this.setIconImage(icon);
 		this.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2,300,500);
@@ -44,6 +60,20 @@ public class Settings extends Frame {
 		settings=new HashMap<String, Object>(anzahl);
 		io=new SettingsIO();
 		loadSettings();
+		
+		actions=new Actions();
+		back=new JPanel();
+		
+		save=new JButton("Save Properties");
+		positionChoose=new JButton("Change Position");
+		
+		positionChoose.addActionListener(actions);
+		save.addActionListener(actions);
+		
+		this.add(back);
+		
+		back.add(positionChoose);
+		back.add(save);
 	}
 	
 	public long getSetPopuptime(){
@@ -95,6 +125,22 @@ public class Settings extends Frame {
 		settings.put("URLadress","http://l4desu.bytezero.de/RLA");
 		settings.put("Intervall", new Period(5,Period.SEC));
 		settings.put("Popuptime", new Period(6,Period.SEC));
+	}
+	
+	private class Actions implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(e.getSource().equals(positionChoose)){
+				owner.getToast().setRepositioning(!owner.getToast().getRepositioning());
+				if(owner.getToast().getRepositioning())
+					owner.getToast().setVisible(true);
+				else
+					owner.getToast().pop();
+			}
+			else if(e.getSource().equals(save)){
+				saveSettings();
+			}
+				
+		}
 	}
 	
 }

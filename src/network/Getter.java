@@ -22,6 +22,12 @@ public class Getter {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		if(!getData()){//just some default stuff... for the lulz
+			name="John Doe";
+			achievment="Existing";
+			description="Over 9000, he's everywhere";
+		}
 	}
 	
 	public void setURL(URL url){
@@ -47,15 +53,14 @@ public class Getter {
 			con.connect();
 			out=((String)con.getContent()).split("/");
 			con.disconnect();
+			if(name!=out[0]||achievment!=out[1]||description!=out[2]){
+				name=out[0];
+				achievment=out[1];
+				description=out[2];
+				return true;
+			}
 		}catch(Exception e){
 			System.out.println("Couldn't get Data");
-			return false;
-		}
-		if(name!=out[0]||achievment!=out[1]||description!=out[2]){
-			name=out[0];
-			achievment=out[1];
-			description=out[2];
-			return true;
 		}
 		return false;
 	}
