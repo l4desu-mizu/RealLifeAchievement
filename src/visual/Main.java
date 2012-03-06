@@ -45,12 +45,13 @@ public class Main extends Frame implements ActionListener{
 		}
 		
 		settings=new Settings(this,trayImage);
-		get=new Getter();
+		get=new Getter(settings.getSetURL());
 		toast=new Toast(this);
 		chronik=new Chronik(trayImage);
 		menu=new TrayMenu(this);
 		gettingTimer=new Timer((int)settings.getSetIntervall(),this);
 		gettingTimer.setActionCommand("getContent");
+		gettingTimer.start();
 		
 		//init systemtray,needs menu
 		if(SystemTray.isSupported())

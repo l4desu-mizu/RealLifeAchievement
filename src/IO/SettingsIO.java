@@ -19,7 +19,6 @@ public class SettingsIO {
 		try{
 			settingsFile=new File(this.getClass().getResource("../"+fileName).getPath());
 		}catch(NullPointerException e){
-			System.out.print(this.getClass().getResource("../"+fileName).getPath());
 			e.printStackTrace();
 			System.out.println("no RLA.settings found. System exiting");
 			System.exit(0);

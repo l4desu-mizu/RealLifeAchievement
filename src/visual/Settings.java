@@ -23,6 +23,11 @@ import IO.SettingsIO;
 public class Settings extends Frame {
 
 	private static final long serialVersionUID = -498468767736919766L;
+	private static final String KEY_POSITION="Position";
+	private static final String KEY_SIZE="Size";
+	private static final String KEY_URL="URLadress";
+	private static final String KEY_INTERVAL="Intervall";
+	private static final String KEY_POPTIME="Popuptime";
 	/**
 	 * Settings: (5)
 	 * 
@@ -77,16 +82,19 @@ public class Settings extends Frame {
 	}
 	
 	public long getSetPopuptime(){
-		return ((Period)settings.get("Popuptime")).getTime();
+		return ((Period)settings.get(Settings.KEY_POPTIME)).getTime();
 	}
 	public long getSetIntervall(){
-		return ((Period)settings.get("Intervall")).getTime();
+		return ((Period)settings.get(Settings.KEY_INTERVAL)).getTime();
 	}
 	public Dimension getSetSize(){
-		return ((Dimension)settings.get("Size"));
+		return ((Dimension)settings.get(Settings.KEY_SIZE));
 	}
 	public Point getSetPosition(){
-		return ((Point)settings.get("Position"));
+		return ((Point)settings.get(Settings.KEY_POSITION));
+	}
+	public String getSetURL(){
+		return (String)settings.get(Settings.KEY_URL);
 	}
 	
 	public void loadSettings(){
@@ -122,7 +130,7 @@ public class Settings extends Frame {
 	private void loadDefaults(){
 		settings.put("Position", new Point(0,0));
 		settings.put("Size", new Dimension(290,90));
-		settings.put("URLadress","http://l4desu.bytezero.de/RLA");
+		settings.put("URLadress","http://l4desu.bytezero.de/RLA/get");
 		settings.put("Intervall", new Period(5,Period.SEC));
 		settings.put("Popuptime", new Period(6,Period.SEC));
 	}
