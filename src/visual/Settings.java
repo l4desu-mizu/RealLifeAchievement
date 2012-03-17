@@ -89,7 +89,7 @@ public class Settings extends Frame {
 		intervalDescription=new javax.swing.JLabel("When should I get new information: "+intervalChoose.getValue()+"s");
 		popupDescription=new javax.swing.JLabel("How long shall I show you them: "+popuptimeChoose.getValue()+"s");
 		//atm disable Textfield, no possibility of changing this.
-		//urlChoose.setEditable(false);
+		urlChoose.setEditable(false);
 		
 		positionChoose.addActionListener(actions);
 		save.addActionListener(actions);

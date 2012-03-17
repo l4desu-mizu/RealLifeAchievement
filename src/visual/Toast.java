@@ -136,7 +136,7 @@ public class Toast extends Window implements ActionListener{
 		poptimer.start();
 		this.setVisible(true);
 		repaint();
-		owner.toFront(); 9
+		owner.toFront();
 		this.toFront();
 	}
 
