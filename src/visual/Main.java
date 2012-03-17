@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -49,7 +50,7 @@ public class Main extends Frame implements ActionListener{
 		toast=new Toast(this);
 		chronik=new Chronik(trayImage);
 		menu=new TrayMenu(this);
-		gettingTimer=new Timer((int)settings.getSetIntervall(),this);
+		gettingTimer=new Timer((int)settings.getSetInterval(),this);
 		gettingTimer.setActionCommand("getContent");
 		gettingTimer.start();
 		
@@ -110,6 +111,22 @@ public class Main extends Frame implements ActionListener{
 		if(e.getActionCommand().equals("getContent"))
 			if(get.getData())
 				toast.pop();
+		
+	}
+
+	public void reloadSettings() {
+		gettingTimer.stop();
+		gettingTimer.setDelay((int)this.settings.getSetInterval());
+		gettingTimer.start();
+		
+		toast.reloadSettings();
+		
+		try {
+			this.get.setURL(new java.net.URL(settings.getSetURL()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

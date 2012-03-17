@@ -31,10 +31,12 @@ public class Toast extends Window implements ActionListener{
 	Toast(Window o) throws HeadlessException {
 		super(o);
 		owner = (Main) o;
+		this.setMinimumSize(new java.awt.Dimension(290,90));//setting default min size, to make sure that there is a minimum good looking state
 		this.setBounds((int) owner.getSettings().getSetPosition().getX(),
-				(int) owner.getSettings().getSetPosition().getX(),
+				(int) owner.getSettings().getSetPosition().getY(),
 				(int) owner.getSettings().getSetSize().getWidth(),
 				(int) owner.getSettings().getSetSize().getHeight());
+		System.out.println(owner.getSettings().getSetPosition());
 		this.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1){
@@ -134,7 +136,7 @@ public class Toast extends Window implements ActionListener{
 		poptimer.start();
 		this.setVisible(true);
 		repaint();
-		owner.toFront();
+		owner.toFront(); 9
 		this.toFront();
 	}
 
@@ -157,5 +159,12 @@ public class Toast extends Window implements ActionListener{
 			this.roast();
 		}
 		
+	}
+
+	public void reloadSettings() {
+		poptimer.stop();
+		poptimer.setDelay((int)owner.getSettings().getSetPopuptime());
+		this.setSize(owner.getSettings().getSetSize());//unneccessary
+		this.setLocation(owner.getSettings().getSetPosition());//unneccessary
 	}
 }
