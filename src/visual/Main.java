@@ -7,11 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import network.Getter;
@@ -24,7 +22,7 @@ public class Main extends Frame implements ActionListener{
 	private TrayMenu menu;
 	private TrayIcon trayContext;
 	private Image trayImage;
-	
+	private String iconName;
 	private Timer gettingTimer;
 	
 	private Settings settings;
@@ -37,13 +35,11 @@ public class Main extends Frame implements ActionListener{
 		//don't show this frame at all
 		this.setBounds(-10, -10, 1, 1);
 		this.setVisible(false);
+		iconName="RLA.png";
 		
 		//load image
-		try {
-			trayImage=ImageIO.read(new File(this.getClass().getResource("RLA.png").getPath()));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		//trayImage=Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("files/"+iconName));
+		trayImage=new ImageIcon(this.getClass().getClassLoader().getResource("files/"+iconName)).getImage();
 		
 		settings=new Settings(this,trayImage);
 		get=new Getter(settings.getSetURL());

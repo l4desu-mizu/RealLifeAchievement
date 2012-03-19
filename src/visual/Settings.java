@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -55,32 +56,45 @@ public class Settings extends Frame {
 	private JTextField urlChoose;
 	private JButton positionChoose,save;
 	private JPanel back;
+	private JCheckBox useSettings;
 	private Main owner;
 	
 	private Actions actions;
 	private SlideListener changy;
+	
+	private Dimension minSize;
 	
 	Settings(Frame owner,Image icon){
 		super("Real Life Achievments Settings");
 		this.owner=(Main)owner;
 		this.setVisible(false);
 		this.setIconImage(icon);
-		this.setSize(300,500);
+		minSize=new Dimension(320,200);
+		this.setMinimumSize(minSize);
+		this.setPreferredSize(minSize);
+		this.setSize(minSize);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				setVisible(false);
 			}
 		});
+		
+		//configsobject load
 		anzahl=5;//anzahl der inhalte?
 		settings=new HashMap<String, Object>(anzahl);
 		io=new SettingsIO();
 		loadSettings();
 		
+		
+		//GUI Components
+			//listeners and back
 		actions=new Actions();
 		changy=new SlideListener();
 		back=new JPanel();
 		
+			//init component
+		useSettings=new JCheckBox("Use Settings",true);
 		save=new JButton("Save Properties");
 		positionChoose=new JButton("Change Position");
 		urlChoose=new JTextField(this.getSetURL());
@@ -88,17 +102,24 @@ public class Settings extends Frame {
 		popuptimeChoose=new JSlider(3,20,6);//3 sec up to 20 sec popuptime
 		intervalDescription=new javax.swing.JLabel("When should I get new information: "+intervalChoose.getValue()+"s");
 		popupDescription=new javax.swing.JLabel("How long shall I show you them: "+popuptimeChoose.getValue()+"s");
-		//atm disable Textfield, no possibility of changing this.
-		urlChoose.setEditable(false);
 		
+			//disable non implemented features
+			//atm disable Textfield, no possibility of changing this.
+		urlChoose.setEditable(false);
+		useSettings.setEnabled(false);
+		
+			//add listeners
 		positionChoose.addActionListener(actions);
 		save.addActionListener(actions);
 		popuptimeChoose.addChangeListener(changy);
 		intervalChoose.addChangeListener(changy);
 		
+			//add background
 		this.add(back);
 		
+			//add components
 		back.add(positionChoose);
+		back.add(useSettings);
 		back.add(urlChoose);
 		back.add(intervalDescription);
 		back.add(intervalChoose);
@@ -132,7 +153,6 @@ public class Settings extends Frame {
 			try{
 				System.out.println("Reading settings");
 				settings=io.readSettings();
-				System.out.println(settings);
 				if(settings==null){
 					loadDefaults();
 					System.out.println("RLA.settings broken?, loading defaults");
@@ -155,7 +175,6 @@ public class Settings extends Frame {
 			settings.put(Settings.KEY_URL, urlChoose.getText());
 			settings.put(Settings.KEY_INTERVAL, new Period(this.intervalChoose.getValue(),Period.SEC));
 			settings.put(Settings.KEY_POPTIME, new Period(this.intervalChoose.getValue(),Period.SEC));
-			System.out.println(settings);
 		}catch(NullPointerException e){
 			System.out.println("No settings yet, initializing defaults for RLA usage");//first init (there is no toast, the toast needs the settings)
 		}
