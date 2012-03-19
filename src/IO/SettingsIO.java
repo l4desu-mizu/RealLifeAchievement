@@ -16,9 +16,23 @@ public class SettingsIO {
 		this("RLA.settings");
 	}
 	public SettingsIO(String fileName){
+		
 		try{
-			settingsFile=new File(this.getClass().getResource("../"+fileName).getPath());
-		}catch(NullPointerException e){
+			
+			try{
+				//loading allready existing settings file
+				settingsFile = new File(SettingsIO.class.getClassLoader().getResource("./"+fileName).getPath());
+				
+			}catch(NullPointerException n){//if it doesn't exsist catch the exception and create a new settings file
+				
+				settingsFile=new File(SettingsIO.class.getClassLoader().getResource("./").getPath()+fileName);
+				
+				if(!settingsFile.createNewFile()){//if creating fails exit with exception, couldn't generate settings
+					throw new Exception("couldn't create Settingsfile");
+				}
+			}
+			
+		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("no RLA.settings found. System exiting");
 			System.exit(0);
@@ -54,7 +68,7 @@ public class SettingsIO {
 		if(settingsFile.canWrite())
 			writeFile(h);
 		else
-			System.out.println("Can write settings File");
+			System.out.println("Can't write settings File");
 	}
 	
 	private void writeFile(HashMap<String,Object> out)throws IOException{
