@@ -36,7 +36,6 @@ public class Toast extends Window implements ActionListener{
 				(int) owner.getSettings().getSetPosition().getY(),
 				(int) owner.getSettings().getSetSize().getWidth(),
 				(int) owner.getSettings().getSetSize().getHeight());
-		System.out.println(owner.getSettings().getSetPosition());
 		this.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1){

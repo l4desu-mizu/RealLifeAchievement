@@ -13,7 +13,7 @@ public class TrayMenu extends PopupMenu {
 		t=target;
 		this.add("Show");
 		this.add("Hide");
-		this.add("Chronik");
+		//this.add("Chronik");
 		this.add("Settings");
 		this.add("Exit");
 		this.addActionListener(new ActionListener(){
