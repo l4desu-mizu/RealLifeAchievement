@@ -10,13 +10,13 @@ import java.awt.event.WindowEvent;
 import IO.ChronikIO;
 
 public class Chronik extends Frame {
-	
+
 	private static final long serialVersionUID = 7020303547570688232L;
 
 	private ChronikIO io;
-	
+
 	private Dimension minSize;
-	
+
 	Chronik(Image icon){
 		super("Real Life Achievments Chronik");
 		this.setVisible(false);

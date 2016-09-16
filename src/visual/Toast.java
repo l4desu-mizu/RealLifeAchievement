@@ -25,9 +25,9 @@ public class Toast extends Window implements ActionListener{
 	private Main owner;
 	private Timer poptimer;
 	private boolean repositioning;
-	
+
 	private Point clickedPoint;
-	
+
 	Toast(Window o) throws HeadlessException {
 		super(o);
 		owner = (Main) o;
@@ -84,7 +84,7 @@ public class Toast extends Window implements ActionListener{
 		g2.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_BUTT,
 				BasicStroke.JOIN_ROUND));
 		g2.drawRect(1, 1, this.getWidth() - 3, this.getHeight() - 3);
-		
+
 		// draw Text
 		g2.setStroke(tmpStroke);
 		g2.setColor(Color.white);
@@ -92,7 +92,7 @@ public class Toast extends Window implements ActionListener{
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-		
+
 		//pretty much why I hate gui foo
 		//setting fonts
 		Font fname=new Font("Futura",Font.BOLD,16),
@@ -103,17 +103,17 @@ public class Toast extends Window implements ActionListener{
 				verb="achieved:",
 				achievment=owner.getGetter().getAchievment(),
 				description=owner.getGetter().getDescription();
-		
+
 		//setting context, textlayout, so it's more or less only to be drawn with specific bounds
 		TextLayout nameLayout=new TextLayout(name,fname,g2.getFontRenderContext()),
 			verbLayout=new TextLayout(verb,fverb,g2.getFontRenderContext()),
 			achievLayout=new TextLayout(achievment,fachiev,g2.getFontRenderContext()),
 			descrLayout=new TextLayout(description,fdescr,g2.getFontRenderContext());
-		
+
 		nameLayout.draw(g2, 10, 20);
 		verbLayout.draw(g2, (int)(15+nameLayout.getBounds().getMaxX()), 20);
 		achievLayout.draw(g2, 15, 20+23);
-		
+
 		//magic linefeed foo -.- "Java: warum einfach, wenns auch kompliziert geht?"
 		if(descrLayout.getBounds().intersectsLine(this.getX()+this.getWidth(),this.getY(), //loift die description rechts ueber
 				this.getX()+this.getWidth(),this.getY()+this.getHeight())){
@@ -144,7 +144,7 @@ public class Toast extends Window implements ActionListener{
 			this.setVisible(false);
 		poptimer.stop();
 	}
-	
+
 	public void setRepositioning(boolean r){
 		this.repositioning=r;
 	}
@@ -157,7 +157,7 @@ public class Toast extends Window implements ActionListener{
 		if(e.getActionCommand().equals("timesUp")){
 			this.roast();
 		}
-		
+
 	}
 
 	public void reloadSettings() {

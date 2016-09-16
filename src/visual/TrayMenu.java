@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class TrayMenu extends PopupMenu {
 
 	private static final long serialVersionUID = 8794176609051298786L;
-	
+
 	private Main t;
 	TrayMenu(Main target){
 		t=target;

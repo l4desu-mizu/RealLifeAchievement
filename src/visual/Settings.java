@@ -32,7 +32,7 @@ public class Settings extends Frame {
 	private static final String KEY_URL="URLaddress";
 	private static final String KEY_INTERVAL="Interval";
 	private static final String KEY_POPTIME="Popuptime";
-	
+
 	//private static final String KEY_PASSWORD="Password";
 	//private static final String KEY_URLSET="URLsetAddress";
 	/**
@@ -44,13 +44,13 @@ public class Settings extends Frame {
 	 * 	Interval
 	 * 	Popuptime
 	 */
-	
+
 	//implementation of setting address: urladress+"/set" (changing get address to urladress+"/get"
-	
+
 	private SettingsIO io;
 	private HashMap<String,Object> settings;
 	private int anzahl;
-	
+
 	private JSlider intervalChoose,popuptimeChoose;
 	private JLabel intervalDescription, popupDescription;
 	private JTextField urlChoose;
@@ -58,12 +58,12 @@ public class Settings extends Frame {
 	private JPanel back;
 	private JCheckBox useSettings;
 	private Main owner;
-	
+
 	private Actions actions;
 	private SlideListener changy;
-	
+
 	private Dimension minSize;
-	
+
 	Settings(Frame owner,Image icon){
 		super("Real Life Achievments Settings");
 		this.owner=(Main)owner;
@@ -79,20 +79,20 @@ public class Settings extends Frame {
 				setVisible(false);
 			}
 		});
-		
+
 		//configsobject load
 		anzahl=5;//anzahl der inhalte?
 		settings=new HashMap<String, Object>(anzahl);
 		io=new SettingsIO();
 		loadSettings();
-		
-		
+
+
 		//GUI Components
 			//listeners and back
 		actions=new Actions();
 		changy=new SlideListener();
 		back=new JPanel();
-		
+
 			//init component
 		useSettings=new JCheckBox("Use Settings",true);
 		save=new JButton("Save Properties");
@@ -102,21 +102,21 @@ public class Settings extends Frame {
 		popuptimeChoose=new JSlider(3,20,6);//3 sec up to 20 sec popuptime
 		intervalDescription=new javax.swing.JLabel("When should I get new information: "+intervalChoose.getValue()+"s");
 		popupDescription=new javax.swing.JLabel("How long shall I show you them: "+popuptimeChoose.getValue()+"s");
-		
+
 			//disable non implemented features
 			//atm disable Textfield, no possibility of changing this.
 		urlChoose.setEditable(false);
 		useSettings.setEnabled(false);
-		
+
 			//add listeners
 		positionChoose.addActionListener(actions);
 		save.addActionListener(actions);
 		popuptimeChoose.addChangeListener(changy);
 		intervalChoose.addChangeListener(changy);
-		
+
 			//add background
 		this.add(back);
-		
+
 			//add components
 		back.add(positionChoose);
 		back.add(useSettings);
@@ -126,8 +126,9 @@ public class Settings extends Frame {
 		back.add(popupDescription);
 		back.add(popuptimeChoose);
 		back.add(save);
+		pack(); //hilfts?
 	}
-	
+
 	public long getSetPopuptime(){
 		return ((Period)settings.get(Settings.KEY_POPTIME)).getTime();
 	}
@@ -143,7 +144,7 @@ public class Settings extends Frame {
 	public String getSetURL(){
 		return (String)settings.get(Settings.KEY_URL);
 	}
-	
+
 	public void loadSettings(){
 		if(!io.settingsFileExsist()||io.settingsFileIsEmpty()){
 			loadDefaults();
@@ -166,7 +167,7 @@ public class Settings extends Frame {
 			}
 		}
 	}
-	
+
 	public void saveSettings(){
 		//change settings
 		try{
@@ -178,7 +179,7 @@ public class Settings extends Frame {
 		}catch(NullPointerException e){
 			System.out.println("No settings yet, initializing defaults for RLA usage");//first init (there is no toast, the toast needs the settings)
 		}
-		
+
 		//write settings
 		try{
 			System.out.println("writing settings");
@@ -189,7 +190,7 @@ public class Settings extends Frame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void loadDefaults(){
 		settings.put(Settings.KEY_POSITION, new Point(0,0));
 		settings.put(Settings.KEY_SIZE, new Dimension(290,90));
@@ -197,21 +198,21 @@ public class Settings extends Frame {
 		settings.put(Settings.KEY_INTERVAL, new Period(5,Period.SEC));
 		settings.put(Settings.KEY_POPTIME, new Period(6,Period.SEC));
 	}
-	
+
 	private void togglePosChooser(boolean disabled){
 		if(disabled)
 			positionChoose.setForeground(new java.awt.Color(0x10Af00));
 		else
 			positionChoose.setForeground(new java.awt.Color(0x0));
 	}
-	
+
 	private void acceptSettings(){
 		saveSettings();
 		owner.getToast().setRepositioning(false);
 		togglePosChooser(owner.getToast().getRepositioning());
 		reloadSettings();
 	}
-	
+
 	private void reloadSettings() {
 		owner.reloadSettings();
 	}
@@ -232,10 +233,9 @@ public class Settings extends Frame {
 			else if(e.getSource().equals(save)){
 				acceptSettings();
 			}
-				
 		}
 	}
-	
+
 	private class SlideListener implements ChangeListener{
 
 		@Override
@@ -249,7 +249,5 @@ public class Settings extends Frame {
 				popupDescription.setText("When should I show you them: "+popuptimeChoose.getValue()+"s");
 			}
 		}
-		
 	}
-	
 }
