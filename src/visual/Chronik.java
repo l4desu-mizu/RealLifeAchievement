@@ -18,7 +18,7 @@ public class Chronik extends Frame {
 	private Dimension minSize;
 
 	Chronik(Image icon){
-		super("Real Life Achievments Chronik");
+		super("Real Life Achievements Chronik");
 		this.setVisible(false);
 		this.setIconImage(icon);
 		minSize=new Dimension(300,500);

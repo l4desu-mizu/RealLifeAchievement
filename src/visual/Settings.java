@@ -65,7 +65,7 @@ public class Settings extends Frame {
 	private Dimension minSize;
 
 	Settings(Frame owner,Image icon){
-		super("Real Life Achievments Settings");
+		super("Real Life Achievements Settings");
 		this.owner=(Main)owner;
 		this.setVisible(false);
 		this.setIconImage(icon);

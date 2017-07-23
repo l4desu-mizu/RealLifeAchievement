@@ -53,7 +53,7 @@ public class Main extends Frame implements ActionListener{
 		//init systemtray,needs menu
 		if(SystemTray.isSupported())
 		{
-			trayContext=new TrayIcon(trayImage,"Real Life Achievments",menu);
+			trayContext=new TrayIcon(trayImage,"Real Life Achievements",menu);
 			trayContext.addMouseListener(new MouseAdapter(){
 				public void mouseClicked(MouseEvent e){
 					if(e.getButton()==1){
